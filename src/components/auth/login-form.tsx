@@ -1,11 +1,10 @@
 import { Button } from '#/components/ui/button'
 import { Separator } from '#/components/ui/separator'
 import { authClient } from '#/lib/auth-client'
+import { toInternalPath } from '#/lib/auth-path'
 import { useNavigate } from '@tanstack/react-router'
 import { useState } from 'react'
 import { toast } from 'sonner'
-
-// import { toInternalPath } from '#/lib/auth-redirect'
 
 export default function LoginForm({ redirectTo }: { redirectTo?: string }) {
   const navigate = useNavigate()
@@ -21,8 +20,7 @@ export default function LoginForm({ redirectTo }: { redirectTo?: string }) {
         fetchOptions: {
           onSuccess: () => {
             toast.success('Logged in successfully!')
-            // const internalRedirect = toInternalPath(redirectTo)
-            navigate({ to: "/" })
+            navigate({ to: toInternalPath(redirectTo) })
           },
           onError: ({ error }) => {
             toast.error(error.message || 'Failed to login. Please try again.')
